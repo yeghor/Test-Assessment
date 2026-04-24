@@ -5,14 +5,14 @@ from pydantic import (
 )
 
 class Settings(BaseSettings):
-    pg_dsn: PostgresDsn = f"postgresql+asyncpg://username:password@localhost:5432/traveling"
-    pg_retries = 10
-    pg_retry_delay = 1
-    pg_echo = False
+    pg_dsn: str = "sqlite+aiosqlite:///database.db"
+    pg_retries: int = 10
+    pg_retry_delay: int = 1
+    pg_echo: bool = False
 
 
-    redis_host = "localhost"
-    redis_port = "6379"
+    redis_host: str = "localhost"
+    redis_port: int = "6379"
 
 
     jwt_secret_key: SecretStr
