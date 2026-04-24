@@ -8,7 +8,6 @@ class PostgresService:
 
     async def add(self, instance: Base) -> None:
         self._session.add(instance)
-        await self._session.flush()
 
     async def delete(self, instance: Base) -> None:
         self._session.delete(instance)

@@ -11,7 +11,7 @@ class ShortTravelProjects(BaseModel):
     name: str
     description: str | None
 
-class TravelProject(ShortTravelProjects):
+class TravelProjectSchema(ShortTravelProjects):
     note: str
 
 class TravelPlaceShort(BaseModel):
@@ -22,6 +22,9 @@ class TravelPlaceShort(BaseModel):
 class TravelPlace(TravelPlaceShort):
     note: str
 
+class AccessibleProjectPlace(BaseModel):
+    place_id: str
+    place_name: str
 
 # HTTP Bodies
 

@@ -14,7 +14,6 @@ class TravelProject(Base):
     __tablename__ = "travel_project"
 
     project_id: Mapped[str] = mapped_column(primary_key=True)
-    user_id: Mapped[str] = mapped_column(ForeignKey("users.user_id"))
 
     name: Mapped[str] = mapped_column(nullable=False)
     description: Mapped[str | None] = mapped_column(nullable=True)
@@ -31,7 +30,7 @@ class TravelPlace(Base):
     __tablename__ = "travel_place"
 
     place_id: Mapped[str] = mapped_column(primary_key=True)
-    user_id: Mapped[str] = mapped_column(ForeignKey("user.user_id"))
+    place_name: Mapped[str] = mapped_column()
     project_id: Mapped[str] = mapped_column(ForeignKey("travel_project.project_id"))
     visited: Mapped[bool] = mapped_column(default=False)
 

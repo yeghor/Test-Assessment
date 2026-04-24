@@ -31,12 +31,17 @@ class PlacesAPI:
             )
         return out
 
-    async def check_place(self, place_id) -> bool:
+    async def check_place(self, place_id: str) -> str:
+        """Returns names of the places, if name None, this place does not exist"""
         async with aiohttp.ClientSession() as session:
             async with session.get(f"{self._base_url}/{place_id}") as response:
                 self._validate_failed_request(response.status, skip_404=True)                
                 
-                return not response.status == 404
+                if response.status == 404:
+                    return None
+                
+                data = await response.json()
+                return data["data"]["id"]
 
     async def get_places(self, page: int) -> List[PlaceDict]:
         async with aiohttp.ClientSession() as session:
