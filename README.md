@@ -34,6 +34,9 @@ To start the project using Docker:
 
 The application will be available at `http://localhost:8000`
 
+
+To see Swagger docs, navigate at `http://localhost:8000/docs`
+
 ## Development
 
 For local development:
@@ -49,3 +52,5 @@ For local development:
    ```
 
 The application will be available at `http://localhost:8000`
+
+To see Swagger docs, navigate at `http://localhost:8000/docs`
