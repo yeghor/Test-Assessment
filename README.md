@@ -2,6 +2,8 @@
 
 This is a test assessment project, implementing a traveling backend service using FastAPI. The application allows users to create and manage travel projects, including adding and organizing places using external APIs.
 
+> Access Swagger API is available at `http://localhost:8000` after project startup
+
 
 ## Prerequisites
 - Docker
