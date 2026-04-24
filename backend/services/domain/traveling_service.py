@@ -192,9 +192,7 @@ class TravelingService:
         if data.visited:
             db_place.visited = data.visited
         if data.note is not None:
-            print(data.note)
             db_place.note = data.note
-            print(db_place.note)
 
     async def get_project_places(self, project_id: str) -> List[TravelPlaceShort]:
         project_places = await self._postgres_service.get_project_places(project_id)

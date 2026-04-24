@@ -4,6 +4,7 @@ This is a test assessment project, implementing a traveling backend service usin
 
 
 ## Prerequisites
+
 - Docker
 - Git (for cloning the repository)
 - Python 3.11+
@@ -11,6 +12,7 @@ This is a test assessment project, implementing a traveling backend service usin
 ## Installation
 
 1. Clone the repository:
+
    ```bash
    git clone 
    cd Test-Assesment
@@ -21,11 +23,13 @@ This is a test assessment project, implementing a traveling backend service usin
 To start the project using Docker:
 
 1. Build the Docker image:
-   ```bash
-   docker build -t traveling_backend .
-   ```
+
+    ```bash
+    docker build -t traveling_backend .
+    ```
 
 2. Run the container:
+
    ```bash
    docker run --name traveling_backend_container -p 8000:8000 -d traveling_backend
    ```

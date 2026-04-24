@@ -31,7 +31,6 @@ async def create_travel_project(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error") from e
 
 
@@ -48,7 +47,6 @@ async def list_travel_projects(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error") from e
 
 
@@ -65,7 +63,6 @@ async def get_travel_project(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error") from e
 
 
@@ -85,7 +82,6 @@ async def update_travel_project(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error") from e
 
 
@@ -103,7 +99,6 @@ async def delete_travel_project(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error") from e
 
 
@@ -121,7 +116,6 @@ async def add_place_to_project(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error") from e
 
 
@@ -142,7 +136,6 @@ async def update_place_in_project(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error") from e
 
 
@@ -159,7 +152,6 @@ async def get_project_places(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
@@ -179,7 +171,6 @@ async def get_project_place(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
@@ -199,7 +190,6 @@ async def get_allowed_project_places(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error")
 
 
@@ -222,5 +212,4 @@ async def search_allowed_project_places(
     except HTTPException as e:
         raise e from e
     except Exception as e:
-        raise e
         raise HTTPException(status_code=500, detail="Internal server error")
