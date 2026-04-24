@@ -21,8 +21,6 @@ class TravelProject(Base):
         DateTime(timezone=True), nullable=True
     )
 
-    note: Mapped[str] = mapped_column(default="")
-
     places: Mapped[list[TravelPlace]] = relationship(back_populates="project", lazy="selectin")
 
 
@@ -33,15 +31,6 @@ class TravelPlace(Base):
     place_name: Mapped[str] = mapped_column()
     project_id: Mapped[str] = mapped_column(ForeignKey("travel_project.project_id"))
     visited: Mapped[bool] = mapped_column(default=False)
+    note: Mapped[str] = mapped_column(nullable=True)
 
     project: Mapped[TravelProject] = relationship(back_populates="places")
-    notes: Mapped[list[TravelPlaceNote]] = relationship(back_populates="place", lazy="selectin")
-
-
-class TravelPlaceNote(Base):
-    __tablename__ = "travel_place_note"
-
-    note_id: Mapped[str] = mapped_column(primary_key=True)
-    place_id: Mapped[str] = mapped_column(ForeignKey("travel_place.place_id"))
-
-    place: Mapped[TravelPlace] = relationship(back_populates="notes")

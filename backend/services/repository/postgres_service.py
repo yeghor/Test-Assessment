@@ -3,7 +3,7 @@ from typing import List, Optional
 from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import Base, TravelPlace, TravelPlaceNote, TravelProject
+from database import Base, TravelPlace, TravelProject
 
 
 class PostgresService:

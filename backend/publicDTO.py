@@ -6,19 +6,16 @@ from typing import List
 from datetime import datetime
 
 
-class ShortTravelProjects(BaseModel):
+class TravelProjectSchema(BaseModel):
     project_id: str
     name: str
     description: str | None
-
-
-class TravelProjectSchema(ShortTravelProjects):
-    note: str
+    start_date: str  # Datetime compatible string
 
 
 class TravelPlaceShort(BaseModel):
     place_id: str
-    name: str
+    place_name: str
     visited: bool
 
 
@@ -41,10 +38,14 @@ class TravelProjectUpdate(BaseModel):
     start_date: datetime | None
 
 
+class TravelPlaceUpdate(BaseModel):
+    visited: bool | None
+    note: str | None
+
+
 class TravelProjectCreate(TravelProjectUpdate):
     name: str
 
-    note: str = Field(default="")
     places: List[str]
 
 

@@ -31,10 +31,10 @@ class PlacesAPI:
         """Returns the place title if the place exists, otherwise None."""
         async with aiohttp.ClientSession() as session:
             async with session.get(f"{self._base_url}/{place_id}") as response:
-                self._validate_failed_request(response.status, skip_404=True)
-
-                if response.status == 404:
+                if response.status == 404 or response.status == 400:
                     return None
+                
+                self._validate_failed_request(response.status, skip_404=True)
 
                 data = await response.json()
                 return data["data"]["title"]

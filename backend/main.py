@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+import uvicorn
+
 from routers import traveling
 from database import initialize_models, get_engine, Base
 
@@ -27,3 +29,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# For debugging
+if __name__ == "__name__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)

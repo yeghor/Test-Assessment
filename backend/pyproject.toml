@@ -1,0 +1,31 @@
+[project]
+name = "TestAssessment"
+authors = [{name = "Romanov Yehor", email = "yeghor.romanov@gmail.com"}]
+requires-python = ">= 3.11"
+version = "1.0"
+dependencies = [
+    "fastapi==0.115.11",
+    "pydantic==2.11.5",
+    "pydantic-settings==2.11.5",
+    "SQLAlchemy==2.0.41",
+    "uvicorn==0.34.0",
+    "aiosqlite==0.21.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+]
+
+[tool.black]
+target-version = ["py311", "py312". "py313"]
+
+
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+# https://github.com/pypa/setuptools/issues/3197#issuecomment-1078770109
+# Required for disabling packages auto-discovery
+[tool.setuptools]
+py-modules = []

@@ -38,7 +38,7 @@ async def create_travel_project(
 @traveling.get("/", summary="List travel projects")
 async def list_travel_projects(
     session: AsyncSession = Depends(get_session_depends),
-) -> List[ShortTravelProjects]:
+) -> List[TravelProjectSchema]:
     """List all travel projects."""
 
     traveling_service = TravelingService(session=session)
@@ -129,7 +129,7 @@ async def add_place_to_project(
 async def update_place_in_project(
     project_id: str,
     place_id: str,
-    visited: bool,
+    data: TravelPlaceUpdate,
     session: AsyncSession = Depends(get_session_depends),
 ) -> None:
     """Update notes or visited state for a place in a project."""
@@ -137,7 +137,7 @@ async def update_place_in_project(
     traveling_service = TravelingService(session=session)
 
     try:
-        await traveling_service.update_project_place(project_id, place_id, visited)
+        await traveling_service.update_project_place(project_id, place_id, data)
         await traveling_service.commit_changes()
     except HTTPException as e:
         raise e from e
@@ -184,7 +184,7 @@ async def get_project_place(
 
 
 @traveling.get(
-    "/places/{page}",
+    "/places/allowed/{page}",
     summary="Get possible places for a project",
 )
 async def get_allowed_project_places(
@@ -196,6 +196,29 @@ async def get_allowed_project_places(
 
     try:
         return await traveling_service.get_possible_project_places(page)
+    except HTTPException as e:
+        raise e from e
+    except Exception as e:
+        raise e
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+
+@traveling.get(
+    "/places/allowed",
+    summary="Search possible places for a project",
+)
+async def search_allowed_project_places(
+    query: str, session: AsyncSession = Depends(get_session_depends)
+) -> List[AccessibleProjectPlace]:
+    """Search possible places for a project"""
+
+    if not query:
+        query = ""
+
+    traveling_service = TravelingService(session=session)
+
+    try:
+        return await traveling_service.search_places(query=query)
     except HTTPException as e:
         raise e from e
     except Exception as e:

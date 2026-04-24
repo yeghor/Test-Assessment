@@ -10,6 +10,8 @@ from uuid import uuid4
 
 import asyncio
 
+from config import settings
+
 
 class TravelingService:
     def __init__(self, session: AsyncSession):
@@ -25,6 +27,13 @@ class TravelingService:
             raise HTTPException(
                 status_code=400,
                 detail="Number of places must be at least 1 and less than 10",
+            )
+
+        # Duplicate places check
+        # https://stackoverflow.com/questions/5278122/checking-if-all-elements-in-a-list-are-unique
+        if len(project.places) != len(set(project.places)):
+            raise HTTPException(
+                status_code=400, detail="Project must contain unique places"
             )
 
         place_names = await asyncio.gather(
@@ -47,7 +56,6 @@ class TravelingService:
             name=project.name,
             description=project.description,
             start_date=project.start_date,
-            note=project.note,
         )
 
         await self._postgres_service.add(travel_project)
@@ -126,13 +134,14 @@ class TravelingService:
 
         await self._postgres_service.delete(db_place)
 
-    async def get_projects(self) -> List[ShortTravelProjects]:
+    async def get_projects(self) -> List[TravelProjectSchema]:
         projects = await self._postgres_service.get_projects()
         return [
-            ShortTravelProjects(
+            TravelProjectSchema(
                 project_id=project.project_id,
                 name=project.name,
                 description=project.description,
+                start_date=project.start_date.strftime(format=settings.datetime_format),
             )
             for project in projects
         ]
@@ -146,7 +155,7 @@ class TravelingService:
             project_id=db_project.project_id,
             name=db_project.name,
             description=db_project.description,
-            note=db_project.note,
+            start_date=db_project.start_date.strftime(settings.datetime_format),
         )
 
     async def search_places(self, query: str) -> List[AccessibleProjectPlace]:
@@ -168,26 +177,31 @@ class TravelingService:
 
         return TravelPlaceSchema(
             place_id=db_place.place_id,
-            name=db_place.place_name,
+            place_name=db_place.place_name,
             visited=db_place.visited,
-            note="",
+            note=db_place.note,
         )
 
     async def update_project_place(
-        self, project_id: str, place_id: str, visited: bool
+        self, project_id: str, place_id: str, data: TravelPlaceUpdate
     ) -> None:
         db_place = await self._postgres_service.get_project_place(project_id, place_id)
         if db_place is None:
             raise HTTPException(status_code=404, detail="Place not found")
 
-        db_place.visited = visited
+        if data.visited:
+            db_place.visited = data.visited
+        if data.note is not None:
+            print(data.note)
+            db_place.note = data.note
+            print(db_place.note)
 
     async def get_project_places(self, project_id: str) -> List[TravelPlaceShort]:
         project_places = await self._postgres_service.get_project_places(project_id)
         return [
             TravelPlaceShort(
                 place_id=place.place_id,
-                name=place.place_name,
+                place_name=place.place_name,
                 visited=place.visited,
             )
             for place in project_places
